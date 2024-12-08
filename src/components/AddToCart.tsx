@@ -1,4 +1,3 @@
-import React from 'react';
 import { AddToCartProps } from '../Types';
 import { Button } from './ui/button';
 import useCart from '../hooks/useCart';
@@ -17,7 +16,7 @@ function AddToCart({ product }: AddToCartProps) {
       onClick={ handleClick }
       className="buttonCart w-full"
     >
-      <h3>Adicionar ao carrinho</h3>
+      Adicionar ao carrinho
     </Button>
   );
 }

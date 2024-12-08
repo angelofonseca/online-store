@@ -1,61 +1,67 @@
-import { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { ScrollArea } from './ui/scroll-area';
-import { Product } from '../Types';
+import { NavLink } from 'react-router-dom';
 import { useCartContext } from '../context/CartContext';
+import useCart from '../hooks/useCart';
+import { Button } from './ui/button';
 import { formatPrice } from '../helpers/formatPrice';
 
-export default function CartSummary() {
-  const { cart, cartLength, totalPrice } = useCartContext();
-  // const [total, setTotal] = useState(0);
-
-  // useEffect(() => {
-  //   const cartTotal = Object.values(cart).reduce((acc, item) => {
-  //     return acc + item.price * item.quantity;
-  //   }, 0);
-  //   setTotal(cartTotal);
-  // }, []);
+function CartSummary() {
+  const { cart, totalPrice } = useCartContext();
+  const { decrementQuantity, incrementQuantity, removeProduct } = useCart();
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle>
-          Produtos (
-          {cartLength}
-          )
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ScrollArea className="h-[600px] w-full rounded-md border p-4">
-          {Object.values(cart).map((product: Product & { quantity: number }) => (
-            <div key={ product.id } className="flex justify-between items-center mb-4">
-              <div className="flex items-center">
-                <img src={ product.thumbnail } alt="" width="48" height="48" className="mr-3 rounded-md object-cover" />
-                <div>
-                  <p className="font-medium">{product.title}</p>
-                  <p className="text-sm text-gray-500">
-                    Quantidade:
-                    {' '}
-                    {product.quantity}
-                  </p>
+    <div className="w-full max-w-4xl">
+      <h1 className="text-2xl font-bold mb-6 text-center" style={ { margin: '20px 0px' } }>Carrinho</h1>
+      <div className="w-full max-w-4xl">
+        {Object.values(cart).map(({ title, price, id, thumbnail, quantity, available_quantity: inStock }) => (
+          <div key={ id } className="flex items-center mb-4 border-b pb-4">
+            <img src={ thumbnail } alt={ thumbnail } className="w-20 h-20 object-cover mr-4" />
+            <div className="flex-grow">
+              <p className="font-medium mb-2">{title}</p>
+              <div className="flex justify-between items-center">
+                <p className="font-medium">
+                  R$
+                  {' '}
+                  {formatPrice(price)}
+                  {' '}
+                  (un.)
+                </p>
+                <div className="flex items-center gap-2">
+                  <Button variant="secondary" onClick={ () => decrementQuantity(id) }>-</Button>
+                  <p className="font-medium">{quantity}</p>
+                  <Button
+                    disabled={ quantity === inStock }
+                    variant="secondary"
+                    onClick={ () => incrementQuantity(id) }
+                  >
+                    +
+                  </Button>
                 </div>
-                <p className="text-sm">
-                  R$&nbsp;
-                  {formatPrice((product.price * product.quantity))}
+                <p className="font-medium">
+                  R$
+                  {' '}
+                  {formatPrice(price * quantity)}
                 </p>
               </div>
             </div>
-          ))}
-        </ScrollArea>
-        <div className="mt-4 flex justify-between items-center font-bold">
-          <p>Total:</p>
-          <p>
-            R$
-            {' '}
-            {formatPrice(totalPrice)}
+            <Button variant="destructive" onClick={ () => removeProduct(id) } className="ml-4">Remover</Button>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-between mt-6">
+        <NavLink to="/">
+          <Button variant="secondary">Conferir Mais Produtos</Button>
+        </NavLink>
+        <div className="flex items-center gap-4">
+          <p className="font-bold">
+            {`Total: R$ ${formatPrice(totalPrice)}`}
           </p>
+          <NavLink to="/checkout">
+            <Button variant="gradient">Comprar</Button>
+          </NavLink>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
+
+export default CartSummary;

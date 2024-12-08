@@ -35,7 +35,7 @@ function DetailedProduct({ product, isDetailedView = true }: ProductCardProps) {
         {' '}
         {inStock}
       </p>
-      <p>{shipping ? <h5>Frete Grátis</h5> : <span />}</p>
+      {shipping && <h5>Frete Grátis</h5>}
 
       {isDetailedView && <RatingAndComment productId={ id } />}
     </div>

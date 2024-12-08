@@ -52,6 +52,7 @@ code {
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
   .dark {
     --background: 20 14.3% 4.1%;
     --foreground: 60 9.1% 97.8%;
@@ -92,6 +93,7 @@ code {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -102,6 +104,7 @@ h1 {
   line-height: 1.2;
 
 }
+
 h2 {
   font-size: 20px;
 }
@@ -113,10 +116,11 @@ h3 {
 .cardImg {
   width: 250px;
   height: 250px;
-  object-fit: contain; /* Mantém a proporção da imagem */
+  object-fit: contain;
+  /* Mantém a proporção da imagem */
 }
 
-.email{
+.email {
   max-width: 50%;
 }
 
@@ -126,23 +130,9 @@ textarea {
 
 .buttonCart {
   margin: 10px 0px 0px 0px;
-  border-radius: 0px 0px 20px 20px;
-  background-color: rgb(255, 255, 255); 
+  /* border-radius: 0px 0px 20px 20px; */
+  background-color: rgb(255, 255, 255);
   padding: 25px;
-}
-
-.card {
-  margin: 10px;
-  padding: 0px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  max-width: 350px;
-  height: 450px;
-  min-width: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .singleCard {
@@ -157,6 +147,6 @@ textarea {
 }
 
 label.font-bold {
-  font-weight: bold; 
+  font-weight: bold;
   color: #0B62FF;
 }

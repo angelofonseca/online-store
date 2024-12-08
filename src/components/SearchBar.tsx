@@ -35,15 +35,10 @@ function SearchBar() {
               onChange={ ({ target }) => setQuery(target.value) }
             />
           </label>
-
-          <Button
-            variant="secondary"
-            type="submit"
-          >
+          <Button variant="secondary" type="submit">
             Pesquisar
           </Button>
         </div>
-
       </form>
     </div>
   );
